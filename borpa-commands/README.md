@@ -1,4 +1,4 @@
-# 🦴🤖 Borpa Commands
+# 🦴 Borpa Commands
 
 <br> 
 

@@ -1,4 +1,4 @@
-# 🦴🤖 Borpa Bot
+# 🦴 Borpa Bot
 
 <br>
 
