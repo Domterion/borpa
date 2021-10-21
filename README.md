@@ -2,7 +2,7 @@
 
 <br>
 
-> Borpa Bot is a Discord about collecting all the Borpa possible. If you dont know what a Borpa is you can find it [here](https://knowyourmeme.com/memes/borpa)
+> Borpa Bot is a Discord bot about collecting all the Borpa possible. If you dont know what a Borpa is you can find it [here](https://knowyourmeme.com/memes/borpa)
 
 | Crate                            |                            Description                             |
 | :------------------------------- | :----------------------------------------------------------------: |
