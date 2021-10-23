@@ -4,7 +4,6 @@ use borpa_commands::handler::Handler;
 
 #[tokio::main]
 async fn main() {
-
     let commands = commands::get_commands();
 
     let handler = Handler::new(commands);

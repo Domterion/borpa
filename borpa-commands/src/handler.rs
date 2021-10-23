@@ -1,8 +1,6 @@
 use std::sync::Arc;
 
-use twilight_model::application::interaction::{
-    application_command::CommandDataOption,
-};
+use twilight_model::application::interaction::application_command::CommandDataOption;
 
 use crate::command::Command;
 
@@ -29,7 +27,7 @@ impl Handler {
                     found = Some(command.clone());
                     commands = &command.subcommands;
                 }
-                None => break
+                None => break,
             }
         }
 
