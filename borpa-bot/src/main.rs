@@ -8,9 +8,7 @@ async fn main() {
 
     let handler = Handler::new(commands);
 
-    // let s = handler.find_command("pong ping".to_string());
-
-    let cmd = handler.find_command("ping pong pond".to_string());
+    let cmd = handler.find_command("owner".to_string());
 
     if let Some(c) = cmd {
         println!(
@@ -22,6 +20,4 @@ async fn main() {
     } else {
         println!("Command not found");
     }
-
-    println!("Hello, world!");
 }
