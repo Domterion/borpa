@@ -11,10 +11,3 @@ macro_rules! command {
         })
     }};
 }
-
-#[macro_export]
-macro_rules! pinned_box {
-    ($e: expr) => {
-        Box::new(move |ctx| Box::pin($e(ctx)))
-    };
-}
