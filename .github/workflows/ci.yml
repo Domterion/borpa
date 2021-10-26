@@ -12,13 +12,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Clippy
-        run: cargo clippy -- -D warnings
-  rustfmt:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-        
-      - name: Run cargo fmt
-        run: cargo fmt --all -- --check
+      - name: Run clippy
+        uses: actions-rs/clippy-check@v1
