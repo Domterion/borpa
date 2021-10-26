@@ -3,60 +3,55 @@ mod misc;
 use std::{collections::HashMap, sync::Arc};
 
 use borpa_commands::command::{Command, CommandKind, CommandType};
+use borpa_utils::command;
 
 pub fn get_commands() -> HashMap<String, Arc<Command>> {
-    let mut commands_: Vec<Arc<Command>> = vec![];
+    let ping = command!(
+        "ping",
+        "Get bots ping",
+        vec![],
+        CommandType::ChatInput,
+        CommandKind::Command,
+        misc::ping::ping
+    );
 
-    let ping = Arc::new(Command {
-        name: "ping".to_string(),
-        description: "Get bots ping".to_string(),
-        options: vec![],
-        r#type: CommandType::ChatInput,
-        kind: CommandKind::Command,
-        handler: Box::new(move |ctx| Box::pin(misc::ping::ping(ctx))),
-    });
+    let pong = command!(
+        "pong",
+        "Get bots pong",
+        vec![],
+        CommandType::ChatInput,
+        CommandKind::SubcommandGroup(ping.clone()),
+        misc::ping::ping
+    );
 
-    let pong = Arc::new(Command {
-        name: "pong".to_string(),
-        description: "Get bots pong".to_string(),
-        options: vec![],
-        r#type: CommandType::ChatInput,
-        kind: CommandKind::SubcommandGroup(ping.clone()),
-        handler: Box::new(move |ctx| Box::pin(misc::ping::ping(ctx))),
-    });
+    let pond = command!(
+        "pond",
+        "Get bots pond",
+        vec![],
+        CommandType::ChatInput,
+        CommandKind::Subcommand(pong.clone()),
+        misc::ping::ping
+    );
 
-    let pond = Arc::new(Command {
-        name: "pond".to_string(),
-        description: "Get bots pond".to_string(),
-        options: vec![],
-        r#type: CommandType::ChatInput,
-        kind: CommandKind::Subcommand(pong.clone()),
-        handler: Box::new(move |ctx| Box::pin(misc::ping::ping(ctx))),
-    });
+    let owner = command!(
+        "owner",
+        "Owner command to be used with a subcommand",
+        vec![],
+        CommandType::ChatInput,
+        CommandKind::Command,
+        misc::ping::ping
+    );
 
-    let owner = Arc::new(Command {
-        name: "owner".to_string(),
-        description: "Owner command to be used with a subcommand".to_string(),
-        options: vec![],
-        r#type: CommandType::ChatInput,
-        kind: CommandKind::Command,
-        handler: Box::new(move |ctx| Box::pin(misc::ping::ping(ctx))),
-    });
+    let eval = command!(
+        "eval",
+        "Execute a code snippet",
+        vec![],
+        CommandType::ChatInput,
+        CommandKind::Subcommand(owner.clone()),
+        misc::ping::ping
+    );
 
-    let eval = Arc::new(Command {
-        name: "eval".to_string(),
-        description: "Execute a code snippet".to_string(),
-        options: vec![],
-        r#type: CommandType::ChatInput,
-        kind: CommandKind::Subcommand(owner.clone()),
-        handler: Box::new(move |ctx| Box::pin(misc::ping::ping(ctx))),
-    });
-
-    commands_.push(ping);
-    commands_.push(pong);
-    commands_.push(pond);
-    commands_.push(owner);
-    commands_.push(eval);
+    let commands_ = vec![ping, pong, pond, owner, eval];
 
     let mut commands: HashMap<String, Arc<Command>> = HashMap::new();
 
