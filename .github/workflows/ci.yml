@@ -15,5 +15,8 @@ jobs:
       - name: Run clippy
         uses: actions-rs/clippy-check@v1
         with:
+          toolchain: nightly
+          components: clippy
+          override: true
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-features
