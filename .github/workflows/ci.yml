@@ -1,0 +1,24 @@
+on: [push]
+
+name: ci
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Clippy
+        run: cargo clippy -- -D warnings
+  rustfmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        
+      - name: Run cargo fmt
+        run: cargo fmt --all -- --check
