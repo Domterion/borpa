@@ -6,9 +6,6 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Cache dependencies
-        uses: Swatinem/rust-cache@v1
-
       - name: Checkout
         uses: actions/checkout@v2
 
