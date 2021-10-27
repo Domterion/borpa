@@ -1,3 +1,5 @@
 [bot]
+# Your bot token goes here
 token = ""
+# Current bot version goes here
 version = ""
