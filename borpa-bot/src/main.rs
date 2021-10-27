@@ -2,18 +2,15 @@ mod commands;
 mod config;
 mod constants;
 
-use std::{error::Error, sync::Arc, time::Duration};
+use std::{error::Error, sync::Arc};
 
-use borpa_commands::{command::CommandKind, handler::Handler};
+use borpa_commands::handler::Handler;
 use futures::StreamExt;
 use metrics_exporter_prometheus::PrometheusBuilder;
-use metrics_runtime::{exporters::LogExporter, observers::JsonBuilder, Receiver};
-use tracing::{info, Level};
-use tracing_log::log;
+use tracing::info;
 use twilight_cache_inmemory::{InMemoryCache, ResourceType};
 use twilight_gateway::{cluster::ShardScheme, Cluster, Event, Intents};
 use twilight_http::Client as HttpClient;
-use twilight_model::application::command::CommandOption;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
