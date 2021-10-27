@@ -1,12 +1,12 @@
 mod commands;
+mod config;
+mod constants;
 
 use borpa_commands::handler::Handler;
 
 #[tokio::main]
 async fn main() {
-    let commands = commands::get_commands();
-
-    let handler = Handler::new(commands);
+    let handler = Handler::new(constants::COMMANDS.clone());
 
     let cmd = handler.find_command("owner".to_string());
 

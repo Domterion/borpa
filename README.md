@@ -10,3 +10,4 @@
 | :------------------------------- | :----------------------------------------------------------------: |
 | [borpa-bot](borpa-bot)           |                            The main bot                            |
 | [borpa-commands](borpa-commands) | Command framework designed around [Twilight](https://twilight.rs/) |
+| [borpa-utils](borpa-utils)       |          A utility library to help make our code cleaner           |
