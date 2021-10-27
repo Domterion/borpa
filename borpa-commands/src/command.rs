@@ -76,6 +76,7 @@ impl Command {
                     format!("{} {}", c.name, self.name)
                 }
             }
+
             CommandKind::SubcommandGroup(c) => format!("{} {}", c.name, self.name),
         };
 
