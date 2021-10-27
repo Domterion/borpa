@@ -45,6 +45,9 @@ dependencies = [
  "serde",
  "tokio",
  "toml",
+ "twilight-http",
+ "twilight-model",
+ "twilight-util",
 ]
 
 [[package]]
@@ -803,9 +806,9 @@ checksum = "59547bce71d9c38b83d9c0e92b6066c4253371f15005def0c30d9657f50c7642"
 
 [[package]]
 name = "twilight-http"
-version = "0.6.6"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "08ef176da0d6a25e7f6b69d6efddacc215ac62313596047566726360ec6cf438"
+checksum = "6194724cc5eaecabada95b44dd87a7bddbd88f10c73f7eac93af63e2d001e22a"
 dependencies = [
  "brotli",
  "hyper",
@@ -820,9 +823,9 @@ dependencies = [
 
 [[package]]
 name = "twilight-model"
-version = "0.6.5"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d7d27af7e29d24bdf4f7e2511b36cc571fb5613b5ca5726ca0da36f55d76668a"
+checksum = "7ebae4b84660775f9e99a4b30d828b17f3779d1055477e099aa361182f71e46b"
 dependencies = [
  "bitflags",
  "serde",
@@ -833,9 +836,12 @@ dependencies = [
 
 [[package]]
 name = "twilight-util"
-version = "0.6.2"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed5820a5c1bef7843ce6cda4d5ee40ac686625572be050b1456b42c110aef73c"
+checksum = "6dbb2151d979abc81e43d4c7747047c4884eef5a8400b43f3bb265dbe5b503ea"
+dependencies = [
+ "twilight-model",
+]
 
 [[package]]
 name = "unicode-xid"

@@ -1,6 +1,6 @@
 use std::{error::Error, future::Future, pin::Pin, sync::Arc};
 
-use twilight_model::application::interaction::application_command::CommandDataOption;
+use twilight_model::application::command::{CommandOption, CommandType as TwilightCommandType};
 
 use crate::context::Context;
 
@@ -15,7 +15,7 @@ pub struct Command {
     /// The description of the command
     pub description: String,
     /// A vector of command options
-    pub options: Vec<CommandDataOption>,
+    pub options: Vec<CommandOption>,
     /// The type of the command
     pub r#type: CommandType,
     /// The kind of command, describes the nesting of the command ie command, subcommand or subcommand group
@@ -40,6 +40,7 @@ pub enum CommandKind {
     SubcommandGroup(Arc<Command>),
 }
 
+#[derive(Clone, Copy)]
 /// Command type
 pub enum CommandType {
     /// When the command is a slash command
@@ -48,6 +49,16 @@ pub enum CommandType {
     User,
     /// A command that shows when you right click a message
     Message,
+}
+
+impl From<CommandType> for TwilightCommandType {
+    fn from(val: CommandType) -> Self {
+        match val {
+            CommandType::ChatInput => TwilightCommandType::ChatInput,
+            CommandType::User => TwilightCommandType::User,
+            CommandType::Message => TwilightCommandType::Message,
+        }
+    }
 }
 
 impl Command {
