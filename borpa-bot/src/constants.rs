@@ -3,6 +3,9 @@ use std::{collections::HashMap, path::PathBuf, sync::Arc};
 use borpa_commands::command::{Command, CommandKind, CommandType};
 use borpa_utils::command;
 use lazy_static::lazy_static;
+use twilight_model::application::command::{
+    BaseCommandOptionData, ChoiceCommandOptionData, CommandOption,
+};
 
 use crate::{commands::misc, config::Config};
 
@@ -12,7 +15,19 @@ lazy_static! {
         let ping = command!(
             "ping",
             "Get bots ping",
-            vec![],
+            vec![
+                CommandOption::Boolean(BaseCommandOptionData {
+                    name: "food?".to_string(),
+                    description: "No".to_string(),
+                    required: false
+                }),
+                CommandOption::String(ChoiceCommandOptionData {
+                    choices: vec![],
+                    name: "gibe".to_string(),
+                    description: "Yes".to_string(),
+                    required: false
+                })
+            ],
             CommandType::ChatInput,
             CommandKind::Command,
             misc::ping::ping
@@ -21,7 +36,11 @@ lazy_static! {
         let pong = command!(
             "pong",
             "Get bots pong",
-            vec![],
+            vec![CommandOption::Boolean(BaseCommandOptionData {
+                name: "pong?".to_string(),
+                description: "Yes".to_string(),
+                required: false
+            })],
             CommandType::ChatInput,
             CommandKind::SubcommandGroup(ping.clone()),
             misc::ping::ping
@@ -30,7 +49,11 @@ lazy_static! {
         let pond = command!(
             "pond",
             "Get bots pond",
-            vec![],
+            vec![CommandOption::Boolean(BaseCommandOptionData {
+                name: "pond?".to_string(),
+                description: "Yes".to_string(),
+                required: false
+            })],
             CommandType::ChatInput,
             CommandKind::Subcommand(pong.clone()),
             misc::ping::ping
@@ -39,7 +62,11 @@ lazy_static! {
         let owner = command!(
             "owner",
             "Owner command to be used with a subcommand",
-            vec![],
+            vec![CommandOption::Boolean(BaseCommandOptionData {
+                name: "no_owner?".to_string(),
+                description: "Yes".to_string(),
+                required: false
+            })],
             CommandType::ChatInput,
             CommandKind::Command,
             misc::ping::ping
@@ -48,7 +75,11 @@ lazy_static! {
         let eval = command!(
             "eval",
             "Execute a code snippet",
-            vec![],
+            vec![CommandOption::Boolean(BaseCommandOptionData {
+                name: "maybe?".to_string(),
+                description: "..".to_string(),
+                required: false
+            })],
             CommandType::ChatInput,
             CommandKind::Subcommand(owner.clone()),
             misc::ping::ping

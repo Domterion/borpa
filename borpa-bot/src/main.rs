@@ -4,13 +4,14 @@ mod constants;
 
 use std::{error::Error, sync::Arc};
 
-use borpa_commands::handler::Handler;
+use borpa_commands::{command::CommandKind, handler::Handler};
 use futures::StreamExt;
 use metrics_exporter_prometheus::PrometheusBuilder;
 use tracing::info;
 use twilight_cache_inmemory::{InMemoryCache, ResourceType};
 use twilight_gateway::{cluster::ShardScheme, Cluster, Event, Intents};
 use twilight_http::Client as HttpClient;
+use twilight_model::application::command::{CommandOption, OptionsCommandOptionData};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
@@ -49,25 +50,79 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
 
     let handler = Handler::new(constants::COMMANDS.clone());
 
-    while let Some((shard_id, event)) = events.next().await {
-        cache.update(&event);
+    // Vector of root commands that are already registered
+    //let mut grouped = vec![];
 
-        tokio::spawn(handle_event(shard_id, event, http.clone()));
-    }
+    // for (name, command) in &handler.commands {
+    //     println!("START COMMAND: {}", name);
+    //     let options: Vec<CommandOption> = match &command.kind {
+    //         CommandKind::Command => {
+    //             if grouped.contains(&command.name) {
+    //                 println!("SKIPPING {}", name);
+    //                 continue;
+    //             }
 
-    /*
-    for (name, command) in &handler.commands {
-        let options: Vec<CommandOption> = match &command.kind {
-            CommandKind::Command =>
-            CommandKind::Subcommand(c) => {
-                if let CommandKind::SubcommandGroup(c_) = &c.kind {
-                } else {
-                }
-            }
-            CommandKind::SubcommandGroup(c) => {}
-        };
-    }
-    */
+    //             grouped.push(command.name.to_owned());
+    //             command.options.to_owned()
+    //         }
+    //         // c is our subcommandgroup
+    //         CommandKind::Subcommand(c) => {
+    //             // c_ is the root command
+    //             if let CommandKind::SubcommandGroup(c_) = &c.kind {
+    //                 if grouped.contains(&c_.name) {
+    //                     println!("SKIPPING {}", name);
+    //                     continue;
+    //                 }
+
+    //                 // Now we have a vector with our subcommand in it
+    //                 let subcommand = CommandOption::SubCommand(OptionsCommandOptionData {
+    //                     name: name.to_string(),
+    //                     description: command.description.to_owned(),
+    //                     options: command.options.to_owned(),
+    //                 });
+
+    //                 let mut merged = vec![subcommand];
+    //                 merged.extend(c.options.to_owned());
+
+    //                 let subcommandgroup =
+    //                     CommandOption::SubCommandGroup(OptionsCommandOptionData {
+    //                         name: c.name.to_string(),
+    //                         description: c.description.to_owned(),
+    //                         options: merged,
+    //                     });
+
+    //                 let mut merged = vec![subcommandgroup];
+    //                 merged.extend(c_.options.to_owned());
+
+    //                 grouped.push(c.name.to_string());
+
+    //                 merged
+    //             } else {
+    //                 vec![]
+    //             }
+    //         }
+    //         CommandKind::SubcommandGroup(c) => {
+    //             if grouped.contains(&c.name) {
+    //                 println!("SKIPPING {}", name);
+    //                 continue;
+    //             }
+
+    //             let subcommandgroup = CommandOption::SubCommandGroup(OptionsCommandOptionData {
+    //                 name: c.name.to_string(),
+    //                 description: c.description.to_owned(),
+    //                 options: command.options.clone(),
+    //             });
+
+    //             let mut merged = vec![subcommandgroup];
+    //             merged.extend(c.options.to_owned());
+
+    //             grouped.push(c.name.to_string());
+
+    //             merged
+    //         }
+    //     };
+    //     println!("END COMMAND");
+    // }
 
     let cmd = handler.find_command("owner".to_string());
 
@@ -80,6 +135,12 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
         //h();
     } else {
         println!("Command not found");
+    }
+
+    while let Some((shard_id, event)) = events.next().await {
+        cache.update(&event);
+
+        tokio::spawn(handle_event(shard_id, event, http.clone()));
     }
 
     Ok(())

@@ -1,6 +1,8 @@
 use std::{error::Error, future::Future, pin::Pin, sync::Arc};
 
-use twilight_model::application::command::{CommandOption, CommandType as TwilightCommandType};
+use twilight_model::application::command::{
+    CommandOption, CommandType as TwilightCommandType, OptionsCommandOptionData,
+};
 
 use crate::context::Context;
 
